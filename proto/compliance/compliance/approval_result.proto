@@ -1,0 +1,12 @@
+syntax = "proto3";
+package compliance.compliance;
+
+option go_package = "compliance/x/compliance/types";
+
+message ApprovalResult {
+  uint64 id = 1;
+  string testerUrl = 2;
+  string testerID = 3;
+  bool approved = 4;
+  string creator = 5;
+}
