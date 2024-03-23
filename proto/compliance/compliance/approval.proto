@@ -1,0 +1,22 @@
+syntax = "proto3";
+package compliance.compliance;
+
+import "compliance/compliance/approval_result.proto";
+
+option go_package = "compliance/x/compliance/types";
+
+message Approval {
+  uint64 id = 1;
+  string serverUrl = 3;
+  string driverID = 4;
+  ApprovalStatus status = 5;
+  string creator = 6;
+  repeated ApprovalResult results = 7;
+}
+
+enum ApprovalStatus {
+  UNSET = 0;
+  PENDING = 1;
+  APPROVED = 2;
+  REJECTED = 3;
+}

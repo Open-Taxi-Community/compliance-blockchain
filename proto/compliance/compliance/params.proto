@@ -1,0 +1,15 @@
+syntax = "proto3";
+package compliance.compliance;
+
+import "amino/amino.proto";
+import "gogoproto/gogo.proto";
+
+option go_package = "compliance/x/compliance/types";
+
+// Params defines the parameters for the module.
+message Params {
+  option (amino.name) = "compliance/x/compliance/Params";
+  option (gogoproto.equal) = true;
+
+  
+}

@@ -1,0 +1,122 @@
+syntax = "proto3";
+
+package compliance.compliance;
+
+import "amino/amino.proto";
+import "gogoproto/gogo.proto";
+import "google/api/annotations.proto";
+import "cosmos/base/query/v1beta1/pagination.proto";
+import "compliance/compliance/params.proto";
+import "compliance/compliance/approval.proto";
+
+option go_package = "compliance/x/compliance/types";
+
+// Query defines the gRPC querier service.
+service Query {
+  
+  // Parameters queries the parameters of the module.
+  rpc Params (QueryParamsRequest) returns (QueryParamsResponse) {
+    option (google.api.http).get = "/compliance/compliance/params";
+  
+  }
+  
+  // Queries a list of ListPendingApprovals items.
+  rpc ListPendingApprovals (QueryListPendingApprovalsRequest) returns (QueryListPendingApprovalsResponse) {
+    option (google.api.http).get = "/compliance/compliance/list_pending_approvals";
+  
+  }
+  
+  // Queries a list of ListApprovedApprovals items.
+  rpc ListApprovedApprovals (QueryListApprovedApprovalsRequest) returns (QueryListApprovedApprovalsResponse) {
+    option (google.api.http).get = "/compliance/compliance/list_approved_approvals";
+  
+  }
+  
+  // Queries a list of GetApproval items.
+  rpc GetApprovalByID (QueryGetApprovalByIDRequest) returns (QueryGetApprovalByIDResponse) {
+    option (google.api.http).get = "/compliance/compliance/get_approval/{approvalId}";
+  
+  }
+  
+  // Queries a list of ListDriverApprovals items.
+  rpc ListDriverApprovals (QueryListDriverApprovalsRequest) returns (QueryListDriverApprovalsResponse) {
+    option (google.api.http).get = "/compliance/compliance/list_driver_approvals/{driverId}";
+  
+  }
+  
+  // Queries a list of ListRejectedApprovals items.
+  rpc ListRejectedApprovals (QueryListRejectedApprovalsRequest) returns (QueryListRejectedApprovalsResponse) {
+    option (google.api.http).get = "/compliance/compliance/list_rejected_approvals";
+  
+  }
+  
+  // Queries a list of ListAllApprovals items.
+  rpc ListAllApprovals (QueryListAllApprovalsRequest) returns (QueryListAllApprovalsResponse) {
+    option (google.api.http).get = "/compliance/compliance/list_all_approvals";
+  
+  }
+}
+// QueryParamsRequest is request type for the Query/Params RPC method.
+message QueryParamsRequest {}
+
+// QueryParamsResponse is response type for the Query/Params RPC method.
+message QueryParamsResponse {
+  
+  // params holds all the parameters of this module.
+  Params params = 1 [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
+}
+
+message QueryListPendingApprovalsRequest {
+  cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryListPendingApprovalsResponse {
+  repeated Approval                               approvals  = 1;
+           cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryListApprovedApprovalsRequest {
+  cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryListApprovedApprovalsResponse {
+  repeated Approval                               approvals  = 1;
+           cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryGetApprovalByIDRequest {
+  uint64 approvalId = 1;
+}
+
+message QueryGetApprovalByIDResponse {
+  Approval approval = 1;
+}
+
+message QueryListDriverApprovalsRequest {
+  string                                driverId   = 1;
+  cosmos.base.query.v1beta1.PageRequest pagination = 2;
+}
+
+message QueryListDriverApprovalsResponse {
+  repeated Approval                               approvals  = 1;
+           cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryListRejectedApprovalsRequest {
+  cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryListRejectedApprovalsResponse {
+  repeated Approval approvals = 1;
+  cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryListAllApprovalsRequest {
+  cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryListAllApprovalsResponse {
+  repeated Approval approvals = 1;
+  cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
