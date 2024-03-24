@@ -1,0 +1,43 @@
+{
+  "approval": [
+    {
+      "id": 1,
+      "serverUrl": "example.com/server1",
+      "driverID": "driver123",
+      "status": 0,
+      "creator": "creator123",
+      "results": [
+        {
+          "id": 1,
+          "testerUrl": "example.com/tester1",
+          "testerID": "tester123",
+          "approved": true,
+          "creator": "creator123"
+        },
+        {
+          "id": 2,
+          "testerUrl": "example.com/tester2",
+          "testerID": "tester456",
+          "approved": false,
+          "creator": "creator456"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "serverUrl": "example.com/server2",
+      "driverID": "driver456",
+      "status": 0,
+      "creator": "creator789",
+      "results": [
+        {
+          "id": 3,
+          "testerUrl": "example.com/tester3",
+          "testerID": "tester789",
+          "approved": true,
+          "creator": "creator789"
+        }
+      ]
+    }
+  ]
+}
