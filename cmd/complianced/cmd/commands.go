@@ -2,6 +2,9 @@ package cmd
 
 import (
 	"errors"
+	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
+	"github.com/cosmos/cosmos-sdk/x/genutil"
+	genutiltypes "github.com/cosmos/cosmos-sdk/x/genutil/types"
 	"io"
 
 	"cosmossdk.io/log"
@@ -40,17 +43,20 @@ func initRootCmd(
 	)
 
 	server.AddCommands(rootCmd, app.DefaultNodeHome, newApp, appExport, addModuleInitFlags)
-
-	validateGenesisCmd := genutilcli.ValidateGenesisCmd(basicManager)
-
-	// add keybase, auxiliary RPC, query, genesis, and tx child commands
+	
+	gentxModule := basicManager[genutiltypes.ModuleName].(genutil.AppModuleBasic)
 	rootCmd.AddCommand(
+		genutilcli.GenTxCmd(basicManager, txConfig, banktypes.GenesisBalancesIterator{}, app.DefaultNodeHome, txConfig.SigningContext().ValidatorAddressCodec()),
+		genutilcli.MigrateGenesisCmd(genutilcli.MigrationMap),
+		genutilcli.CollectGenTxsCmd(banktypes.GenesisBalancesIterator{}, app.DefaultNodeHome, gentxModule.GenTxValidator, txConfig.SigningContext().ValidatorAddressCodec()),
+		genutilcli.ValidateGenesisCmd(basicManager),
+		genutilcli.AddGenesisAccountCmd(app.DefaultNodeHome, txConfig.SigningContext().AddressCodec()),
+		genutilcli.ValidateGenesisCmd(basicManager),
 		server.StatusCommand(),
 		genesisCommand(txConfig, basicManager),
 		queryCommand(),
 		txCommand(),
 		keys.Commands(),
-		validateGenesisCmd,
 	)
 }
 
