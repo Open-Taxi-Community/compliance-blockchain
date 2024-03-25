@@ -47,6 +47,8 @@ func initAppConfig() (string, interface{}) {
 	// Optionally allow the chain developer to overwrite the SDK's default
 	// server config.
 	srvCfg := serverconfig.DefaultConfig()
+	// TODO REMOVE THIS
+	srvCfg.MinGasPrices = "0.001337stake"
 	// The SDK's default minimum gas price is set to "" (empty value) inside
 	// app.toml. If left empty by validators, the node will halt on startup.
 	// However, the chain developer can set a default app.toml value for their
